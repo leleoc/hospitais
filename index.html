@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Hospitais Sumaré</title>
+		<meta charset='utf-8' />
+		<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+		<link href='style/index.css' rel='stylesheet'/>
+		<link href='https://api.mapbox.com/mapbox-gl-js/v0.35.0/mapbox-gl.css' rel='stylesheet' />
+
+		<script src='https://api.mapbox.com/mapbox-gl-js/v0.35.0/mapbox-gl.js'></script>
+	</head>
+	<body>
+		<header>
+			<div id="menu">
+				<a href="index.html" id="home" class="botaoMenu">inicio</a>
+				<a href="formulario.html" id="bform" class="botaoMenu">fale conosco</a>
+				<a href="info.html" id="binfo" class="botaoMenu" id="contato">informações</a>
+			</div>
+		</header>
+
+		<div id="map"></div>
+
+		<footer>
+			<div class="foot">
+				<center>Developed by: Victor & Leo, Referencias:<a href="http://www.devmedia.com.br/html5-validator-validando-formularios-com-html5/28785">DevMedia</a>;<a href="https://www.mapbox.com/">MapBox</a></center>
+			</div>
+		</footer>
+		<script>
+		    mapboxgl.accessToken = 'pk.eyJ1Ijoib2h3YWl0IiwiYSI6ImNqMWUxM2dzdTAwMDAzMm12MHBwMm1leTMifQ.ZhXYHrr5cTjNvpg-Mdvpig';
+			var map = new mapboxgl.Map({
+				container: 'map',
+				style: 'mapbox://styles/mapbox/streets-v9',
+				center: [-47.264932, -22.817653],
+				zoom: 13
+			});
+			map.on('load', function () {
+			    map.addLayer({
+			    	"id": "hospitals",
+			        "type": "symbol",
+			        "source": {
+			            "type": "geojson",
+			            "data": {
+			                "type": "FeatureCollection",
+			                "features": [{
+			                    "type": "Feature",
+			                    "geometry": {
+			                        "type": "Point",
+			                        "coordinates": [-47.274380, -22.830915]
+			                    },
+			                    "properties": {
+			                    	"description": "<strong>UPA Sumaré</strong><p> R. Vinícius de Moraes, 380 - Jardim Macarenko, Sumaré - SP, 13171-816;Telefone: (19) 3399-6100</p>",
+			                        "icon": "hospital"
+			                    }
+			                }, {
+			                    "type": "Feature",
+			                    "geometry": {
+			                        "type": "Point",
+			                        "coordinates": [-47.246140, -22.805573]
+			                    },
+			                    "properties": {
+			                    	"description": "<strong>UNIMED Sumaré Pronto Atendimento PA-UC</strong><p><a href=\"http://www.unimed.coop.br/\" target=\"_blank\">UNIMED Sumaré Pronto Atendimento PA-UC :</a> R. Fioravante Mancino, 900 - Chácara Monte Alegre, Sumaré - SP, 13175-575;Telefone: (19) 3803-9010</p>",
+			                        "icon": "hospital"
+			                    }
+			                }, {
+			                    "type": "Feature",
+			                    "geometry": {
+			                        "type": "Point",
+			                        "coordinates": [-47.240832, -22.815424]
+			                    },
+			                    "properties": {
+			                    	"description": "<strong>Hospital Estadual Sumaré Dr. Leandro Franceschini</strong><p><a href=\"http://www.hes.unicamp.br/\" target=\"_blank\">Hospital Estadual Sumaré Dr. Leandro Franceschini :</a> Av. da Amizade, 2400 - Jardim Bela Vista, Sumaré - SP, 13175-490;Telefone: (19) 3883-8900</p>",
+			                        "icon": "hospital"
+			                    }
+			                }, {
+			                    "type": "Feature",
+			                    "geometry": {
+			                        "type": "Point",
+			                        "coordinates": [-47.269196, -22.817803]
+			                    },
+			                    "properties": {
+			                    	"description": "<strong>Centro de Saúde II</strong><p>R. Antônio do Vale Mello, 1510 - Centro, Sumaré - SP, 13170-100</p>",
+			                        "icon": "hospital"
+			                    }
+			                }, {
+			                    "type": "Feature",
+			                    "geometry": {
+			                        "type": "Point",
+			                        "coordinates": [-47.265752, -22.817982]
+			                    },
+			                    "properties": {
+			                    	"description": "<strong>Ambulatório de Especialidades Sumaré</strong><p>Av. Três M, 50 - Centro, Sumaré - SP, 13170-013;Telefone: (19) 3399-6000</p>",
+			                        "icon": "hospital"
+			                    }
+			                }, {
+			                    "type": "Feature",
+			                    "geometry": {
+			                        "type": "Point",
+			                        "coordinates": [-47.285837, -22.815757]
+			                    },
+			                    "properties": {
+			                    	"description": "<strong>Unidade de Saúde Evangelina Ferraz Pereira</strong><p>R. João de Vasconcelos - Parque Joao de Vasconcelos, Sumaré - SP, 13172-590;Telefone: (19) 3873-7981</p>",
+			                        "icon": "hospital"
+			                    }
+			                }]
+			            }
+			        },
+			        "layout": {
+			            "icon-image": "{icon}-15",
+			            "text-field": "{title}",
+			            "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+			            "text-offset": [0, 0.6],
+			            "text-anchor": "top"
+			        }
+			    });
+
+			    map.on('click', 'hospitals', function (e) {
+			     	new mapboxgl.Popup()
+	            	.setLngLat(e.features[0].geometry.coordinates)
+	            	.setHTML(e.features[0].properties.description)
+	            	.addTo(map);
+	    		});
+
+	    		map.on('mouseenter', 'hospitals', function () {
+	        		map.getCanvas().style.cursor = 'pointer';
+	    		});
+
+	    		map.on('mouseleave', 'hospitals', function () {
+	        		map.getCanvas().style.cursor = '';
+	    		});
+			});
+			map.addControl(new mapboxgl.NavigationControl());
+		</script>
+	</body>
+</html>
